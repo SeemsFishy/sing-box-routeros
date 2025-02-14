@@ -25,7 +25,7 @@ jobs:
 
       - name: Update IMAGE_TAG in Dockerfile
         run: |
-          sed -i 's/IMAGE_TAG/${{ inputs.image_tag }}/' Dockerfile
+          sed -i 's/IMAGE_TAG/${{ inputs.image_tag }}/g' Dockerfile
 
       - name: Setup buildx
         id: buildx
