@@ -1,4 +1,4 @@
-FROM ghcr.io/sagernet/sing-box:latest AS main
+FROM ghcr.io/sagernet/sing-box:IMAGE_TAG AS main
 LABEL maintainer="Dhuran"
 RUN set -ex \
     && apk upgrade \
