@@ -23,11 +23,6 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
 
-      - name: Update IMAGE_TAG in Dockerfile
-        run: |
-          sed -i "s/IMAGE_TAG/${{ inputs.image_tag }}/g" Dockerfile
-          cat Dockerfile
-
       - name: Setup buildx
         id: buildx
         uses: docker/setup-buildx-action@v3.3.0
@@ -39,12 +34,17 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Update IMAGE_TAG in Dockerfile
+        run: |
+          sed -i "s/IMAGE_TAG/${{ inputs.image_tag }}/g" Dockerfile
+          cat Dockerfile
+
       - name: Build docker image
         id: docker_build_candidate
         uses: docker/build-push-action@v6.1.0
         with:
           platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
-          file: Dockerfile
+          context: .
           push: true
           tags: ghcr.io/seemsfishy/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}
           builder: ${{ steps.buildx.outputs.name }}
