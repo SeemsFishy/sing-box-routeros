@@ -6,4 +6,5 @@ RUN set -ex \
     && rm -rf /var/cache/apk/* \
     && rm /usr/sbin/iptables \
     && ln -s /usr/sbin/iptables-legacy /usr/sbin/iptables
-ENTRYPOINT ["sing-box"]
+COPY entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
